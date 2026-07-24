@@ -1,0 +1,104 @@
+========================================
+AGENTROUTER COPILOT PATCH SUMMARY
+========================================
+
+DATE: 2026-07-24
+TARGET FILE: C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\fc3def6774\resources\app\extensions\copilot\dist\extension.js
+PATCHED VERSION: extension_patched.js
+
+========================================
+PATCHES APPLIED (2 total)
+========================================
+
+PATCH 1: Allow custom User-Agent header
+----------------------------------------
+LOCATION: Sl class _reservedHeaders Set
+FUNCTION: _isReservedHeader() / _sanitizeCustomHeaders()
+
+WHAT WAS CHANGED:
+  - Removed "user-agent" from the _reservedHeaders Set
+  - This Set defines headers that Copilot Chat will NEVER send, even if provided in requestHeaders
+  - By removing "user-agent", custom User-Agent headers from chatLanguageModels.json can now reach AgentRouter
+
+WHY NEEDED:
+  - AgentRouter rejects requests with "unauthorized client detected" unless a specific User-Agent is sent
+  - Copilot Chat was blocking the custom User-Agent before it left the extension
+  - Even though requestHeaders contained User-Agent, it was silently dropped
+
+BEFORE:
+  this._reservedHeaders = new Set([
+    "accept-charset", "accept-encoding", ..., "user-agent", ...
+  ])
+
+AFTER:
+  this._reservedHeaders = new Set([
+    "accept-charset", "accept-encoding", ..., (user-agent removed) ...
+  ])
+
+RESULT: Custom User-Agent header now flows through to AgentRouter requests
+
+========================================
+
+PATCH 2: Fix null usage crash in SSE streaming
+----------------------------------------
+LOCATION: processSSEInner() function
+FUNCTION: Handles streaming response chunks from the API
+
+WHAT WAS CHANGED:
+  - Added null/object type check after JSON.parse(d)
+  - The code assumed parsed JSON was always an object
+  - Now it skips malformed/null chunks instead of crashing
+
+WHY NEEDED:
+  - Some API responses contain empty or non-object JSON chunks
+  - This caused: TypeError: Cannot read properties of null (reading 'usage')
+  - The crash aborted the entire stream and broke the chat response
+
+BEFORE:
+  let p;
+  try { p = JSON.parse(d) }
+  catch { ...; continue; }
+  if (p.usage && ...) { yield p.usage }
+
+AFTER:
+  let p;
+  try { p = JSON.parse(d) }
+  catch { ...; continue; }
+  if (!p || typeof p !== "object") continue;
+  if (p.usage && ...) { yield p.usage }
+
+RESULT: Malformed SSE chunks are skipped gracefully, no more null reference crashes
+
+========================================
+FILES MODIFIED
+========================================
+
+PRIMARY FILE:
+  C:\Users\xxxxx\AppData\Local\Programs\Microsoft VS Code\fc3def6774\resources\app\extensions\copilot\dist\extension.js
+  - This is the live Copilot Chat extension file
+  - All 2 patches applied here
+  - Size: 20142678 bytes
+
+BACKUP FILES :
+  extension_backup.js          - Original unpatched version (20142655 bytes)
+  extension_patched.js         - patched version (20142678 bytes)
+
+
+
+
+========================================
+HOW TO APPLY PATCHES TO NEW VS CODE INSTALL
+========================================
+
+METHOD 1 - Direct copy (recommended):
+  1. Close VS Code completely
+  2. Copy extension_patched.js to:
+     C:\Users\sfsiadmin\AppData\Local\Programs\Microsoft VS Code\fc3def6774\resources\app\extensions\copilot\dist\extension.js
+  3. Reopen VS Code
+
+
+TO REVERT TO ORIGINAL:
+  1. Close VS Code completely
+  2. Copy extension_backup.js to extension.js
+  3. Reopen VS Code
+

@@ -1,0 +1,110 @@
+	{
+		"name": "Agent Router1",
+		"vendor": "customendpoint",
+		"apiKey": "YOUR_API_KEY_HERE",
+		"apiType": "chat-completions",
+		"baseUrl": "https://agentrouter.org/v1",
+		"requestHeaders": {
+			"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+			"Authorization": "Bearer YOUR_API_KEY_HERE"
+		},
+		"models": [
+			{
+				"id": "glm-5.2",
+				"name": "AR (glm-5.2)",
+				"url": "https://agentrouter.org/v1",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 1000000,
+				"maxOutputTokens": 131072,
+				"supportsReasoningEffort": [
+					"high",
+					"max"
+				],
+				"requestHeaders": {
+					"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+					"Authorization": "Bearer YOUR_API_KEY_HERE"
+				}
+			},
+			{
+				"id": "gpt-5.5",
+				"name": "AR (gpt-5.5)",
+				"url": "https://agentrouter.org/v1",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 1050000,
+				"maxOutputTokens": 128000,
+				"supportsReasoningEffort": [
+					"none",
+					"low",
+					"medium",
+					"high",
+					"xhigh"
+				],
+				"requestHeaders": {
+					"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+					"Authorization": "Bearer YOUR_API_KEY_HERE"
+				}
+			},
+			{
+				"id": "claude-opus-4-6",
+				"name": "AR (claude-opus-4-6)",
+				"url": "https://agentrouter.org/v1",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 1000000,
+				"maxOutputTokens": 128000,
+				"supportsReasoningEffort": [
+					"low",
+					"medium",
+					"high",
+					"xhigh"
+				],
+				"requestHeaders": {
+					"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+					"Authorization": "Bearer YOUR_API_KEY_HERE",
+					"anthropic-version": "2023-06-01"
+				}
+			},
+			{
+				"id": "claude-opus-4-7",
+				"name": "AR (claude-opus-4-7)",
+				"url": "https://agentrouter.org/v1",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 1000000,
+				"maxOutputTokens": 128000,
+				"supportsReasoningEffort": [
+					"low",
+					"medium",
+					"high",
+					"xhigh"
+				],
+				"requestHeaders": {
+					"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+					"Authorization": "Bearer YOUR_API_KEY_HERE",
+					"anthropic-version": "2023-06-01"
+				}
+			},
+			{
+				"id": "claude-opus-4-8",
+				"name": "AR (claude-opus-4-8)",
+				"url": "https://agentrouter.org/v1",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 1000000,
+				"maxOutputTokens": 128000,
+				"supportsReasoningEffort": [
+					"low",
+					"medium",
+					"high",
+					"xhigh"
+				],
+				"requestHeaders": {
+					"User-Agent": "claude-cli/0.0.0 (external, cli) (node/v20.0.0)",
+					"Authorization": "Bearer YOUR_API_KEY_HERE",
+					"anthropic-version": "2023-06-01"
+				}
+			}
+		]
+	}
