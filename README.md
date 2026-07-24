@@ -87,7 +87,6 @@ Open Copilot Chat — your AgentRouter models will now be available.
 |-------|------------|-----|
 | `unauthorized client detected` | `User-Agent` header was blocked by reserved headers | Removed `user-agent` from reserved header set |
 | `Cannot read properties of null (reading 'usage')` | Malformed SSE chunks caused null pointer crash | Added null/object guard after JSON parsing |
-| `Error fetching available OpenRouter models` | OpenRouter discovery threw on HTML responses | Graceful fallback returns empty object instead of crashing |
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png" width="100%">
